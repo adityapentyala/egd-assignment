@@ -18,6 +18,7 @@ Use the following command to clone the repository:
 
 `git clone <repository_url>`
 
+Here, `<repository_url>` is `https://github.com/adityapentyala/egd-assignment`
 
 # Setting up a Python 3.10 Virtual Environment
 
