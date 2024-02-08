@@ -12,13 +12,17 @@ If you don't have Git installed, download and install it from the [official Git 
 
 Open your terminal or command prompt where you want to clone the repository.
 
-## Step 3: Clone the Repository
+## Step 3: Create your fork of the repository
+
+Click the 'Fork' button on the top-right corner of this repository's page, and create your own fork. Then, follow the following instructions in your own fork of the repository. Read about forks [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)
+
+## Step 4: Clone the Repository
 
 Use the following command to clone the repository:
 
 `git clone <repository_url>`
 
-Here, `<repository_url>` is `https://github.com/adityapentyala/egd-assignment`
+Here, `<repository_url>` is the url of your fork of the repository.
 
 # Setting up a Python 3.10 Virtual Environment
 
