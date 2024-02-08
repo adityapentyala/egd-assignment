@@ -51,6 +51,7 @@ Run the command `python -m venv egd-env`
 ### For Windows:
 
 If using command prompt, in the root directory of egd-env, run `egd-env/Scripts/activate.bat`
+
 If using powershell (recommended), run `egd-env/Scripts/activate.ps1`
 
 ### For MacOS:
