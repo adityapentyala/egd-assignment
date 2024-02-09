@@ -14,8 +14,8 @@ def get_data(filepath: str, save: bool=False):
     years = list(range(earliest_year, 2015, 5))
     excel_data.set_index("Indicator Name", inplace = True)
     filtered_data = excel_data.loc[metrics, years]
-    print(filtered_data)
-    print(filtered_data.columns)
+    #print(filtered_data)
+    #print(filtered_data.columns)
     filtered_data = filtered_data.transpose()
     filtered_data.to_excel(f"{filepath}_clean.xlsx")
     print("written succesfully!")
