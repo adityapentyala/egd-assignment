@@ -7,7 +7,7 @@ lr = LinearRegression()
 
 def create_train_data(filepath, latest_gdp: int):
     df = pd.read_excel(filepath)
-    data = Bunch(data=df.drop('GDP (current LCU)', axis=1).values,
+    data = Bunch(data=df.drop(['Year','GDP (current LCU)'], axis=1).values,
             target=df['GDP (current LCU)'].values)
     gdp_growth = []
     #print(data['target'])
@@ -16,7 +16,7 @@ def create_train_data(filepath, latest_gdp: int):
     gdp_growth.append((latest_gdp-data['target'][-1])/data['target'][-1])
     data['target'] = np.array(gdp_growth, dtype=np.float64)
     #print(data)
-    return data
+    return data, df.columns
 
 def find_regression_params(data):
     lr = LinearRegression()
