@@ -14,3 +14,7 @@ print(f"R2 score: {score}\n", f"coeffs: {list(coeffs)}\n", f"intercept: {interce
 utils.print_equation(metrics, coeffs, intercept)
 print()
 utils.print_stat_table(metrics, coeffs, intercept)
+
+
+
+#penti is gay
