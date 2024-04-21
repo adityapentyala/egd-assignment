@@ -8,18 +8,24 @@ metrics = ["GDP (current LCU)", "GDP per capita (current US$)", "Gross savings (
         "Fuel exports (% of merchandise exports)", "Labor force, total",
         "Military expenditure (current USD)"]
 
-def get_data(filepath: str, save: bool=False):
+def get_data(filepath: str, save: bool=False, get_train: bool=True, get_test: bool=True):
     excel_data = pd.read_excel(filepath, usecols=list(range(2, 67)), skiprows=2)
     excel_data.columns = excel_data.iloc[0]
     excel_data = excel_data[1:]
     years = list(range(earliest_year, 2015, 5))
+    test_years = list(range(earliest_year+1, 2015, 5))
     excel_data.set_index("Indicator Name", inplace = True)
     filtered_data = excel_data.loc[metrics, years]
+    test_filtered = excel_data.loc[metrics, test_years]
     #print(filtered_data)
     #print(filtered_data.columns)
+    test_filtered = test_filtered.transpose()
     filtered_data = filtered_data.transpose()
-    filtered_data.to_excel(f"{filepath}_clean.xlsx")
-    print("written succesfully!")
+    if save and get_test:
+        test_filtered.to_excel(f"{filepath}_test_clean.xlsx")
+    if save and get_train:
+        filtered_data.to_excel(f"{filepath}_clean.xlsx")
+    print(f"written succesfully to {filepath}!")
 
 
 def print_equation(metrics, coeffs, intercept):

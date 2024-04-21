@@ -18,7 +18,8 @@ def create_train_data(filepath, latest_gdp: int):
     #print(data)
     return data, df.columns
 
-def find_regression_params(data):
+def find_regression_params(data, test_data):
     lr = LinearRegression()
     lr.fit(data['data'], data['target'])
-    return lr.score(data['data'], data['target']), lr.coef_, lr.intercept_
+    return lr.score(data['data'], data['target']), lr.coef_, lr.intercept_, lr.score(test_data['data'], test_data['target'])
+    
