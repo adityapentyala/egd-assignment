@@ -46,3 +46,21 @@ def print_stat_table(metrics, coeffs, intercept):
         data.append((new_metrics[i], betas[i]))
     table = tabulate(data, headers=['METRIC', 'BETA'])
     print(table)
+    
+def clean_data(file):
+    df = pd.read_excel(file)
+    columns_delete=["Country Name", "Country Code", "Series Code",
+       "1973 [YR1973]", "1974 [YR1974]", "1975 [YR1975]", "1976 [YR1976]","1977 [YR1977]", "1978 [YR1978]", "1979 [YR1979]", "1980 [YR1980]",
+       "1981 [YR1981]", "1982 [YR1982]", "1983 [YR1983]", "1984 [YR1984]", "1985 [YR1985]", "1986 [YR1986]", "1987 [YR1987]", "1988 [YR1988]",
+       "1989 [YR1989]"]
+    df=df.drop(columns=columns_delete)
+    df=df.transpose()
+    df.columns = df.iloc[0]
+    df = df.iloc[pd.RangeIndex(len(df)).drop(0)]
+    df["GDP per capita (current US$)"] = np.log(np.array(df["GDP per capita (current US$)"], dtype=np.float64))
+    for col in df.columns:
+     df[col] = np.array(df[col], dtype=np.float64)
+    outfile = file.split("raw.")[0].replace("raw", "clean") +"clean.xlsx"
+    print(outfile)
+    df.to_excel(outfile)
+    print(f"Written to file {outfile}")
