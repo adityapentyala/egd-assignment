@@ -60,7 +60,9 @@ def clean_data(file):
     df["GDP per capita (current US$)"] = np.log(np.array(df["GDP per capita (current US$)"], dtype=np.float64))
     for col in df.columns:
      df[col] = np.array(df[col], dtype=np.float64)
+    df = df.rename(columns={'GDP per capita (current US$)':'Natural Log of GDP per capita (current US$)'})
     outfile = file.split("raw.")[0].replace("raw", "clean") +"clean.xlsx"
     print(outfile)
     df.to_excel(outfile)
     print(f"Written to file {outfile}")
+    
