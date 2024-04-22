@@ -68,6 +68,27 @@ def clean_data(file):
     
 def concatenate_gdp(clean_df,country_code):
     country_df = pd.read_excel(clean_df)
-    country_gdp = pd.read_excel(r"C:\Users\gaura\OneDrive\Desktop\BITS\Sem 2\EGD\egd-assignment\data\GDP_data.xlsx")[country_code]
+    country_gdp = pd.read_excel("data/GDP_data.xlsx")[country_code]
     country_df["GDP"] = country_gdp
     return country_df
+
+def concatenate_gdp_growth(clean_df):
+    new_df=clean_df
+    gdp_growth = []
+    for i in range(3,len(new_df[clean_df.columns[0]])):
+       gdp_growth.append((new_df["GDP"][i] - new_df["GDP"][i-3])/new_df["GDP"][i-3])
+    for _ in range(3):
+        new_df = new_df.iloc[pd.RangeIndex(len(new_df)).drop(0)]
+    new_df["gdp growth rate"] = gdp_growth
+    return new_df
+
+def drop_rows_for_reg(gdp_growth_df):
+    df_reg=pd.DataFrame({"Unnamed: 0":[],"Natural Log of GDP per capita (current US$)":[],"Gross domestic savings (current US$)":[],"Labor force, total":[],
+                     "Military expenditure (current USD)":[],"Net trade in goods and services (BoP, current US$)":[],"Consumer price index (2010 = 100)":[],
+                     "Foreign direct investment, net (BoP, current US$)":[],"GDP":[]})
+    for i in range(0,len(gdp_growth_df),3):
+        df_reg=df_reg._append(gdp_growth_df.iloc[i])
+    df_reg.reset_index(inplace=True)
+    df_reg=df_reg.drop(columns="index")
+    return df_reg
+    
