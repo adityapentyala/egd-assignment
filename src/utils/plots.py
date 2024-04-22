@@ -36,7 +36,6 @@ def plot_reg_lines(raw_df, X, y, model):
     mean_y = 0
     for col in X.columns[1:]:
         mean_y+=model.params[col]*means[col]
-    print(means)
     for col in X.columns[1:]:
         plt.figure()
         pred_y = model.params[col]*raw_df[col] + model.params["const"] + mean_y - model.params[col]*means[col]
