@@ -6,9 +6,9 @@ from sklearn.utils import Bunch
 lr = LinearRegression()
 
 def create_regression_data(df):
-    data = Bunch(data=df.drop(['Unnamed: 0'], axis=1).values,
-            target=df['GDP growth'].values)
-    return data, df.columns
+    data = Bunch(data=df.drop(columns=['Unnamed: 0', 'gdp growth rate', 'GDP', 'Military expenditure (current USD)'], axis=1).values,
+            target=df['gdp growth rate'].values)
+    return data, df.drop(['Unnamed: 0', 'gdp growth rate', 'GDP', 'Military expenditure (current USD)'], axis=1).columns
 
 def find_regression_params(data):
     lr = LinearRegression()

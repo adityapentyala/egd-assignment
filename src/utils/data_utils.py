@@ -66,3 +66,8 @@ def clean_data(file):
     df.to_excel(outfile)
     print(f"Written to file {outfile}")
     
+def concatenate_gdp(clean_df,country_code):
+    country_df = pd.read_excel(clean_df)
+    country_gdp = pd.read_excel(r"C:\Users\gaura\OneDrive\Desktop\BITS\Sem 2\EGD\egd-assignment\data\GDP_data.xlsx")[country_code]
+    country_df["GDP"] = country_gdp
+    return country_df
