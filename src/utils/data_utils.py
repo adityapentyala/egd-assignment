@@ -68,7 +68,7 @@ def clean_data(file):
     
 def concatenate_gdp(clean_df,country_code):
     country_df = pd.read_excel(clean_df)
-    country_gdp = pd.read_excel("data/GDP_data.xlsx")[country_code]
+    country_gdp = pd.read_excel("../data/GDP_data.xlsx")[country_code]
     country_df["GDP"] = country_gdp
     return country_df
 
@@ -83,8 +83,8 @@ def concatenate_gdp_growth(clean_df):
     return new_df
 
 def drop_rows_for_reg(gdp_growth_df):
-    df_reg=pd.DataFrame({"Unnamed: 0":[],"Natural Log of GDP per capita (current US$)":[],"Gross domestic savings (current US$)":[],"Labor force, total":[],
-                     "Military expenditure (current USD)":[],"Net trade in goods and services (BoP, current US$)":[],"Consumer price index (2010 = 100)":[],
+    df_reg=pd.DataFrame({"Year":[],"Natural Log of GDP per capita (current US$)":[],"Gross domestic savings (current US$)":[],"Labor force, total":[],
+                     "Net trade in goods and services (BoP, current US$)":[],"Consumer price index (2010 = 100)":[],
                      "Foreign direct investment, net (BoP, current US$)":[],"GDP":[]})
     for i in range(0,len(gdp_growth_df),3):
         df_reg=df_reg._append(gdp_growth_df.iloc[i])
