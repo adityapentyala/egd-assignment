@@ -28,3 +28,22 @@ def plot_vs_gdp(df, growth_rate=False):
             axs.title.set_text(f"{to_plot} vs {cols[i][j]}")
             axs.set_xlabel(cols[i][j])
             axs.set_ylabel(to_plot)
+
+def plot_reg_lines(raw_df, X, y, model):
+    means = {}
+    for col in X.columns[1:]:
+        means[col] = np.mean(raw_df[col])
+    mean_y = 0
+    for col in X.columns[1:]:
+        mean_y+=model.params[col]*means[col]
+    print(means)
+    for col in X.columns[1:]:
+        plt.figure()
+        pred_y = model.params[col]*raw_df[col] + model.params["const"] + mean_y - model.params[col]*means[col]
+        plt.plot(raw_df[col], pred_y, color="red")
+        plt.scatter(raw_df[col], pred_y, color="red")
+        plt.scatter(raw_df[col], raw_df["gdp growth rate"])
+        plt.title(f"Fitted GDP growth rate vs {col}")
+        plt.xlabel(col)
+        plt.ylabel("GDP growth rate")
+        plt.show()
