@@ -66,9 +66,9 @@ def clean_data(file):
     df.to_excel(outfile)
     print(f"Written to file {outfile}")
     
-def concatenate_gdp(clean_df,country_code):
+def concatenate_gdp(clean_df,country_code, gdp_data_file):
     country_df = pd.read_excel(clean_df)
-    country_gdp = pd.read_excel("../data/GDP_data.xlsx")[country_code]
+    country_gdp = pd.read_excel(gdp_data_file)[country_code]
     country_df["GDP"] = country_gdp
     return country_df
 
