@@ -2,7 +2,8 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd
 import numpy as np
 from sklearn.utils import Bunch
-from statsmodels.api import OLS, add_constant
+from statsmodels.api import OLS, WLS, add_constant
+from sklearn.cluster import KMeans
 
 def create_regression_data_sklearn(df):
     data = Bunch(data=df.drop(columns=['Year', 'gdp growth rate', 'GDP', 'Military expenditure (current USD)'], axis=1).values,
@@ -27,6 +28,13 @@ def create_regression_data_OLS(df):
     y = df["gdp growth rate"]
     return X, y
 
-def fit_model(X, y):
-    model = OLS(y, X).fit()
+def fit_OLS_model(X, y, cov_type='nonrobust'):
+    if cov_type == "cluster":
+        clusterer = KMeans(n_clusters=3).fit(X)
+        groups = pd.Series(clusterer.labels_)
+    model = OLS(y, X).fit(cov_type=cov_type, cov_kwds={"groups":groups})
+    return model
+
+def fit_WLS_model(X, y, weights=1):
+    model = WLS(y, X, weights=weights).fit()
     return model
