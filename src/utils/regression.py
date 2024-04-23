@@ -32,7 +32,9 @@ def fit_OLS_model(X, y, cov_type='nonrobust'):
     if cov_type == "cluster":
         clusterer = KMeans(n_clusters=3).fit(X)
         groups = pd.Series(clusterer.labels_)
-    model = OLS(y, X).fit(cov_type=cov_type, cov_kwds={"groups":groups})
+        model = OLS(y, X).fit(cov_type=cov_type, cov_kwds={"groups":groups})
+    else:
+        model = OLS(y, X).fit()
     return model
 
 def fit_WLS_model(X, y, weights=1):
