@@ -15,7 +15,7 @@ def find_regression_params_sklearn(data):
     lr.fit(data['data'], data['target'])
     return lr.coef_, lr.intercept_, lr.score(data['data'], data['target'])
     
-def create_regression_data_OLS(df):
+def create_regression_data_OLS(df, drop=[]):
     X = df[[
         "Natural Log of GDP per capita (current US$)",
         "Gross domestic savings (current US$)",
@@ -24,6 +24,8 @@ def create_regression_data_OLS(df):
         "Consumer price index (2010 = 100)",
         "Foreign direct investment, net (BoP, current US$)"
     ]]
+    for col in drop:
+        X=X.drop(columns=[col])
     X = add_constant(X)
     y = df["gdp growth rate"]
     return X, y
