@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from statsmodels.graphics import tsaplots
 
 def create_plots(df):
     columns = df.columns
@@ -66,3 +67,9 @@ def plot_reg_lines(raw_df, X, y, model, dummy=False):
             plt.ylabel("GDP growth rate")
             plt.legend()
             plt.show()
+
+def create_acf_pacf_plots(avg_df):
+    for col in avg_df.columns:
+        tsaplots.plot_acf(avg_df[col], alpha=0.05, title=f"{col} autocorrelation")
+        tsaplots.plot_pacf(avg_df[col], alpha=0.05, title=f"{col} partial autocorrelation")
+        plt.show()
