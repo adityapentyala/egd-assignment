@@ -3,7 +3,7 @@ from statsmodels.api import tsa
 from datetime import datetime
 import numpy as np
 
-def get_timeseries_dataset(df):
+def get_timeseries_dataset(df, ratios=False):
     X = df[["Year",
         "Natural Log of GDP per capita (current US$)",
         "Gross domestic savings (current US$)",
@@ -13,6 +13,13 @@ def get_timeseries_dataset(df):
         "Foreign direct investment, net (BoP, current US$)", 
         "gdp growth rate"
     ]]
+    if ratios:
+        X["Gross domestic savings (current US$)"] = X["Gross domestic savings (current US$)"]/df["GDP"]
+        X["Foreign direct investment, net (BoP, current US$)"] = X["Foreign direct investment, net (BoP, current US$)"]/df["GDP"]
+        X["Net trade in goods and services (BoP, current US$)"] = X["Net trade in goods and services (BoP, current US$)"]/df["GDP"]
+        X = X.rename(columns={"Net trade in goods and services (BoP, current US$)":"Net trade in goods and services (% of GDP)",
+                              "Foreign direct investment, net (BoP, current US$)": "Foreign direct investment, net (% of GDP)",
+                              "Gross domestic savings (current US$)":"Gross domestic savings (% of GDP)"})
     X["Year"] = pd.to_datetime(df["Year"], format="%Y", errors='coerce')
     X.set_index("Year", inplace=True)
     #X = X.resample('A').mean()

@@ -15,15 +15,34 @@ def find_regression_params_sklearn(data):
     lr.fit(data['data'], data['target'])
     return lr.coef_, lr.intercept_, lr.score(data['data'], data['target'])
     
-def create_regression_data_OLS(df, drop=[]):
-    X = df[[
-        "Natural Log of GDP per capita (current US$)",
-        "Gross domestic savings (current US$)",
-        "Labor force, total",
-        "Net trade in goods and services (BoP, current US$)",
-        "Consumer price index (2010 = 100)",
-        "Foreign direct investment, net (BoP, current US$)"
-    ]]
+def create_regression_data_OLS(df, drop=[], dummies=False, ratios=False):
+    if not dummies:
+        X = df[[
+            "Natural Log of GDP per capita (current US$)",
+            "Gross domestic savings (current US$)",
+            "Labor force, total",
+            "Net trade in goods and services (BoP, current US$)",
+            "Consumer price index (2010 = 100)",
+            "Foreign direct investment, net (BoP, current US$)"
+        ]]
+    else:
+        X = df[[
+            "Natural Log of GDP per capita (current US$)",
+            "Gross domestic savings (current US$)",
+            "Labor force, total",
+            "Net trade in goods and services (BoP, current US$)",
+            "Consumer price index (2010 = 100)",
+            "Foreign direct investment, net (BoP, current US$)",
+            "developing_dummy",
+            "underdeveloped_dummy"
+        ]]
+    if ratios:
+        X["Gross domestic savings (current US$)"] = X["Gross domestic savings (current US$)"]/df["GDP"]
+        X["Foreign direct investment, net (BoP, current US$)"] = X["Foreign direct investment, net (BoP, current US$)"]/df["GDP"]
+        X["Net trade in goods and services (BoP, current US$)"] = X["Net trade in goods and services (BoP, current US$)"]/df["GDP"]
+        X = X.rename(columns={"Net trade in goods and services (BoP, current US$)":"Net trade in goods and services (% of GDP)",
+                              "Foreign direct investment, net (BoP, current US$)": "Foreign direct investment, net (% of GDP)",
+                              "Gross domestic savings (current US$)":"Gross domestic savings (% of GDP)"})
     for col in drop:
         X=X.drop(columns=[col])
     X = add_constant(X)
