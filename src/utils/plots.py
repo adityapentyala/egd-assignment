@@ -73,3 +73,12 @@ def create_acf_pacf_plots(avg_df):
         tsaplots.plot_acf(avg_df[col], alpha=0.05, title=f"{col} autocorrelation")
         tsaplots.plot_pacf(avg_df[col], alpha=0.05, title=f"{col} partial autocorrelation")
         plt.show()
+
+def plot_avg_trend(avg_df):
+    for col in avg_df.columns:
+        plt.figure()
+        plt.plot(avg_df.index, avg_df[col])
+        plt.title(f"Average {col} across nations over time")
+        plt.xlabel("Year")
+        plt.ylabel(f"Average {col}")
+        plt.show()
