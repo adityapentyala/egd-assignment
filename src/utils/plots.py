@@ -82,3 +82,15 @@ def plot_avg_trend(avg_df):
         plt.xlabel("Year")
         plt.ylabel(f"Average {col}")
         plt.show()
+
+def plot_arima_fit(gdp_growth_rate, arima_model):
+    plt.figure()
+    plt.plot(gdp_growth_rate, label="Actual GDP growth rate")
+    pred = arima_model.predict()
+    #pred_series = pd.Series(pred.predicted_mean, index=gdp_growth_rate.index)
+    plt.plot(pred, label="Fitted model")
+    plt.legend()
+    plt.xlabel("Year")
+    plt.ylabel("GDP growth rate")
+    plt.title("Model fit vs actual data")
+    plt.show()
